@@ -3,6 +3,7 @@ import { Module } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { TypeOrmModule } from '@nestjs/typeorm';
+import { FilekitaModule } from './filekita/filekita.module';
 
 @Module({
   imports: [
@@ -13,9 +14,12 @@ import { TypeOrmModule } from '@nestjs/typeorm';
       username: process.env.DB_USERNAME,
       password: process.env.DB_PASSWORD,
       database: process.env.DB_NAME,
-      entities: [],
       synchronize: true,
-    })
+      dropSchema: true,
+      logging: true,
+      entities: ['src/**/*.entity.ts', 'dist/**/*.entity.js'],
+    }),
+    FilekitaModule
   ],
   controllers: [AppController],
   providers: [AppService],
